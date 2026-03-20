@@ -1,15 +1,93 @@
+#define NOBLE_BEAUTY "Beauty"
+#define NOBLE_STASH "Stashed Riches"
+#define NOBLE_RESIDENCY "Residency"
+#define NOBLE_SHREWD "Shrewd Appraisal"
+
 /datum/virtue/utility/noble
 	name = "Nobility"
-	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
+	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. I've cleverly stashed away a familial heirloom."
 	restricted = TRUE
 	races = list(/datum/species/construct, /datum/species/dullahan)
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
-	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
-                                "Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
+	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble)
+	max_choices = 1  //Tentatively only 1 choice, should always be the same as well-off minus 1
+	choice_costs = list(0)
+	extra_choices = list(	//Uses the same method as notable/well-off with its own list to allow for modifying the flavor text if desired.
+		NOBLE_BEAUTY,
+		NOBLE_STASH,
+		NOBLE_RESIDENCY,
+		NOBLE_SHREWD
+	)
+	choice_tooltips = list(
+		NOBLE_BEAUTY = "Just looking at me relieves some of the hardships of the world, and I'm quite good in bed.",
+		NOBLE_STASH = "I've a hidden coinpurse for a particularly dark dae.",
+		NOBLE_RESIDENCY = "I am a Resident of Azure Peak, with access to one of its buildings all to myself.",
+		NOBLE_SHREWD = "Grants Secular Appraise -- a spell that allows you to tell how much wealth someone has on them, and in their Meister."
+	)
 
-/datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
+/datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient) //Similar to notable/well-off, the only difference is that it includes nobles income bonus
 	SStreasury.noble_incomes[recipient] += 15
+	if(!triumph_check(recipient))
+		return
+	for(var/choice in picked_choices)
+		switch(choice)
+			if(NOBLE_BEAUTY)
+				ADD_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_GOODLOVER, TRAIT_VIRTUE)
+				recipient.mind?.special_items["Hand Mirror"] = /obj/item/handmirror
+			if(NOBLE_STASH)
+				recipient.mind?.special_items["Weighty Coinpurse"] = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch
+			if(NOBLE_SHREWD)
+				ADD_TRAIT(recipient, TRAIT_SEEPRICES, TRAIT_VIRTUE)
+				recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
+			if(NOBLE_RESIDENCY)
+				ADD_TRAIT(recipient, TRAIT_RESIDENT, TRAIT_VIRTUE)
+				var/mapswitch = 0
+				if(SSmapping.config.map_name == "Dun World")
+					mapswitch = 1
+
+				if(mapswitch == 0)
+					return
+				if(recipient.mind?.assigned_role == "Adventurer" || recipient.mind?.assigned_role == "Mercenary" || recipient.mind?.assigned_role == "Court Agent")
+					// Find tavern area for spawning
+					var/area/spawn_area
+					for(var/area/A in world)
+						if(istype(A, /area/rogue/indoors/town/tavern))
+							spawn_area = A
+							break
+
+					if(spawn_area)
+						var/target_z = 3 //ground floor of tavern for dun manor / world
+						var/target_y = 234 //dun world huge
+						var/list/possible_chairs = list()
+
+						for(var/obj/structure/chair/C in spawn_area)
+							//z-level 3, wooden chair, and Y > north of tavern backrooms
+							var/turf/T = get_turf(C)
+							if(T && T.z == target_z && T.y > target_y && istype(C, /obj/structure/chair/wood/rogue) && !T.density && !T.is_blocked_turf(FALSE))
+								possible_chairs += C
+
+						if(length(possible_chairs))
+							var/obj/structure/chair/chosen_chair = pick(possible_chairs)
+							recipient.forceMove(get_turf(chosen_chair))
+							chosen_chair.buckle_mob(recipient)
+							to_chat(recipient, span_notice("As a resident of Azure Peak, you find yourself seated at a chair in the local tavern."))
+						else
+							var/list/possible_spawns = list()
+							for(var/turf/T in spawn_area)
+								if(T.z == target_z && T.y > (target_y + 4) && !T.density && !T.is_blocked_turf(FALSE))
+									possible_spawns += T
+
+							if(length(possible_spawns))
+								var/turf/spawn_loc = pick(possible_spawns)
+								recipient.forceMove(spawn_loc)
+								to_chat(recipient, span_notice("As a resident of Azure Peak, you find yourself in the local tavern."))
+
+#undef NOBLE_BEAUTY
+#undef NOBLE_STASH
+#undef NOBLE_RESIDENCY
+#undef NOBLE_SHREWD
 
 #define NOTABLE_BEAUTY "Beauty"
 #define NOTABLE_STASH "Stashed Riches"
