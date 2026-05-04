@@ -23,7 +23,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE, 
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/adventurer/foreigner/pre_equip(mob/living/carbon/human/H)
@@ -170,7 +170,7 @@
 	head = /obj/item/clothing/head/roguetown/roguehood/psydon
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	beltl = /obj/item/rogueweapon/whip
-	backpack_contents = list(/obj/item/recipe_book/survival = 1, 
+	backpack_contents = list(/obj/item/recipe_book/survival = 1,
 						/obj/item/rogueweapon/huntingknife = 1)
 
 /datum/advclass/foreigner/refugee
@@ -213,7 +213,7 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/black
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	backpack_contents = list(/obj/item/recipe_book/survival = 1, 
+	backpack_contents = list(/obj/item/recipe_book/survival = 1,
 						/obj/item/rogueweapon/huntingknife = 1)
 
 /datum/advclass/foreigner/slaver
@@ -261,9 +261,9 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	beltr = /obj/item/rogueweapon/sword/long/shotel
-	backpack_contents = list(/obj/item/rope/chain = 2, 
-							/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
-							/obj/item/recipe_book/survival = 1, 
+	backpack_contents = list(/obj/item/rope/chain = 2,
+							/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+							/obj/item/recipe_book/survival = 1,
 							/obj/item/rogueweapon/huntingknife = 1)
 
 
@@ -404,9 +404,9 @@
 	maximum_possible_slots = 3 //Should be categorically rarer to see than Iron- and Steel-clad adventurers. Tickles the powerscale ala the Exorcist, albeit to a wider extent with its potential combinations.
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_BLOOD_RESISTANCE)
 	subclass_stats = list(
-		STATKEY_STR = 1, //Abbreviated to +1/+3/+2/-2 for short. Seven statpoints weighed against a two- (or rather, four-) point penalty in Speed. This is intentional, as the Thespian has a lot of room to stretch their proverbial wings. 
-		STATKEY_WIL = 3, 
-		STATKEY_CON = 2, 
+		STATKEY_STR = 1, //Abbreviated to +1/+3/+2/-2 for short. Seven statpoints weighed against a two- (or rather, four-) point penalty in Speed. This is intentional, as the Thespian has a lot of room to stretch their proverbial wings.
+		STATKEY_WIL = 3,
+		STATKEY_CON = 2,
 		STATKEY_SPD = -2,
 	)
 	subclass_skills = list(
@@ -506,7 +506,7 @@
 			if("Axegauntlet + Shortsword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				beltr = /obj/item/rogueweapon/sword/short/gladius 
+				beltr = /obj/item/rogueweapon/sword/short/gladius
 				r_hand = /obj/item/rogueweapon/katar/bronze/gladiator
 				backr = /obj/item/rogueweapon/scabbard/sword/strap
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
@@ -591,7 +591,7 @@
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/bronze
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/full/bronze/alt
 				pants = /obj/item/clothing/under/roguetown/loincloth/brown
-				cloak = /obj/item/clothing/cloak/cape/red 
+				cloak = /obj/item/clothing/cloak/cape/red
 				belt = /obj/item/storage/belt/rogue/leather/battleskirt/breechcloth/red
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/bronze
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -812,7 +812,7 @@
 	icon_state = "awelfchestalt"
 	item_state = "awelfchestalt"
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //-33% durability hit, with 300 instead of 500HP.
-	body_parts_covered = CHEST | VITALS | LEGS 
+	body_parts_covered = CHEST | VITALS | LEGS
 
 /obj/item/clothing/gloves/roguetown/elven_gloves/autumn
 	name = "autumnwoad elven gloves"
@@ -841,3 +841,96 @@
 	max_integrity = ARMOR_INT_SIDE_LEATHER - 25 // -20% durability hit, with 175HP instead of 225HP.
 
 //
+
+/datum/advclass/foreigner/lesseranthrax
+	name = "'Anthraxi' Scout"
+	tutorial = "The Dark Elves, who usually live underground, are an extremely violent \
+	race. They are known for their insidious ability to use spider poisons and razor-sharp \
+	blades.  You have gone to the surface, whether by orders from your matriarch, by your \
+	own choice, or exile, you shall roam these lands and either thrive, or die trying."
+	outfit = /datum/outfit/job/roguetown/adventurer/lesseranthrax
+	class_select_category = CLASS_CAT_RACIAL
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_races = list(
+		/datum/species/elf/dark
+	)
+	cmode_music = 'sound/music/combat_delf.ogg'
+	traits_applied = list(TRAIT_DARKVISION, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT)
+	maximum_possible_slots = 3 //A little stronger then traditional Nomad or Adventurer, the slot limit is intended to reflect their limited presence on Azuria.
+	subclass_stats = list(
+		STATKEY_WIL = 1,
+		STATKEY_PER = 2,
+		STATKEY_SPD = 2,
+	)
+	subclass_skills = list(
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+	)
+	extra_context = "This subclass is race-restricted to the Dark Elf species. They may choose from a bow, a whip, a slurbow, dual falx, or a second knife."
+
+/datum/outfit/job/roguetown/adventurer/lesseranthrax/pre_equip(mob/living/carbon/human/H)
+	..()
+	backl = /obj/item/storage/backpack/rogue/satchel/black
+	backpack_contents = list(
+		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/recipe_book/survival = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/corroded/dirk = 1,
+		/obj/item/rogueweapon/scabbard/sheath)
+	shirt = /obj/item/clothing/suit/roguetown/shirt/shadowshirt/elflock
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/shadowvest
+	cloak = /obj/item/clothing/cloak/half/shadowcloak
+	gloves = /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves/elflock
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+	mask = /obj/item/clothing/mask/rogue/shepherd/shadowmask/delf
+	neck = /obj/item/clothing/neck/roguetown/coif/heavypadding
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	belt = /obj/item/storage/belt/rogue/leather/black
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/shadowpants
+
+	H.faction += "spider_lowers"
+
+	if(H.mind)
+		var/weapon = list("Bow & Arrows", "Dual Falx", "Slurbow and Light Bolts", "Whip", "Dual Daggers")  //Loadout is the same as drow NPCs, with the minor addition of being able to choose a slurbow.
+		var/weaponchoice = input(H, "Choose your WEAPON.", "PICK YOUR INSTRUMENTS.") as anything in weapon
+		switch(weaponchoice)
+			if("Bow & Arrows")
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+				beltr = /obj/item/quiver/arrows
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if("Dual Falx")
+				l_hand = /obj/item/rogueweapon/sword/falx/stalker
+				r_hand = /obj/item/rogueweapon/sword/falx/stalker
+				beltr = /obj/item/rogueweapon/scabbard/sword
+				beltl = /obj/item/rogueweapon/scabbard/sword
+				backr = null
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+			if("Slurbow and Light Bolts")
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
+				beltr = /obj/item/quiver/bolt/light
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if("Whip")
+				r_hand = /obj/item/rogueweapon/whip
+				backr = null
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if("Dual Daggers")
+				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/corroded/dirk
+				beltr = /obj/item/rogueweapon/scabbard/sheath
+				backr = null
+				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
