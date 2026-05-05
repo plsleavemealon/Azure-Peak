@@ -88,3 +88,57 @@
 	desc = "The breadth of my being is one of many, distinguished talents. \n (Allows access to 'virtues', special traits/quirks that replace the bonus normally given by a statpack.)"
 	virtuous = TRUE
 
+/datum/statpack/wildcard/destined
+	name = "Destined"
+	desc = "Destiny influences your fate, will you find greatness or sorrow? Tragedy or fortune? The gods shall decide. Allows for a second virtue. Xylixians get blessed fortune!"
+	stat_array = list(STAT_STRENGTH = list(-1, 1), STAT_PERCEPTION = list(-1, 1), STAT_INTELLIGENCE = list(-1, 1), STAT_CONSTITUTION = list(-1, 1), STAT_WILLPOWER = list(-1, 1), STAT_SPEED = list(-1, 1), STAT_FORTUNE = list(-1, 1))
+	virtuous = TRUE
+
+	/// Stats are locked in once you spawn, so you cant FT and then respawn to re-roll it
+	var/list/locked_stat_array_destined = list()
+
+/datum/statpack/wildcard/destined/get_stat_array(mob/living/carbon/human/recipient, mob/dead/new_player/new_player)
+	var/player_ckey = recipient.ckey || new_player?.ckey
+	var/loaded_slot = recipient.client?.prefs?.loaded_slot || new_player?.client?.prefs?.loaded_slot
+	var/key = "[player_ckey]-[loaded_slot]"
+
+	if(locked_stat_array_destined[key])
+		return locked_stat_array_destined[key]
+
+	if(recipient.patron == GLOB.patronlist[/datum/patron/divine/xylix])
+		var/list/xylixian_array = stat_array.Copy()
+
+		for(var/stat_key in shuffle(xylixian_array))
+			if(stat_key == STAT_FORTUNE)
+				xylixian_array[stat_key] = list(0, 1)
+			else
+				xylixian_array[stat_key] = list(-1, 1)
+		return xylixian_array
+	return ..()
+
+/datum/statpack/wildcard/destined/post_apply(mob/living/carbon/human/recipient, mob/dead/new_player/new_player, list/applied_stats)
+	var/player_ckey = recipient.ckey || new_player?.ckey
+	var/loaded_slot = recipient.client?.prefs?.loaded_slot || new_player?.client?.prefs?.loaded_slot
+	var/key = "[player_ckey]-[loaded_slot]"
+
+	// lock in the stats
+	locked_stat_array_destined[key] = applied_stats.Copy()
+
+	var/list/messages = list("Fate has adjusted your statblock as such...")
+	if(recipient.patron == GLOB.patronlist[/datum/patron/divine/xylix])
+		messages += span_notice("Xylix smiles upon you, believer!")
+	messages += ""
+	for(var/stat_key in applied_stats)
+		var/value = applied_stats[stat_key]
+		var/message = "[capitalize(stat_key)]: [value]"
+		if(value > 0)
+			messages += span_green(message)
+		else if(value == 0)
+			messages += span_notice(message)
+		else
+			messages += span_red(message)
+
+	if(recipient.ckey)
+		to_chat(recipient, examine_block(messages.Join("\n")))
+	else if(new_player?.ckey)
+		to_chat(new_player, examine_block(messages.Join("\n")))
