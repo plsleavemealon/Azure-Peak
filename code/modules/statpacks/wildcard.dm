@@ -105,7 +105,7 @@
 	if(locked_stat_array_destined[key])
 		return locked_stat_array_destined[key]
 
-	if(recipient.patron == GLOB.patronlist[/datum/patron/divine/xylix])
+	if(recipient.patron == GLOB.patronlist[/datum/patron/divine/xylix])  //Builds the xylixian stat array for the Destined statpack, grants them a minimum of 0 fortune, with no other changes.
 		var/list/xylixian_array = stat_array.Copy()
 
 		for(var/stat_key in shuffle(xylixian_array))
