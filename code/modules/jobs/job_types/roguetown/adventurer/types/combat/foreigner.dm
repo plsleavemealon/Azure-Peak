@@ -851,9 +851,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/lesseranthrax
 	class_select_category = CLASS_CAT_RACIAL
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		/datum/species/elf/dark
-	)
+	forbidden_races = list(RACES_ANTHRAX)
 	cmode_music = 'sound/music/combat_delf.ogg'
 	traits_applied = list(TRAIT_DARKVISION, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT)
 	maximum_possible_slots = 3 //A little stronger then traditional Nomad or Adventurer, the slot limit is intended to reflect their limited presence on Azuria.
