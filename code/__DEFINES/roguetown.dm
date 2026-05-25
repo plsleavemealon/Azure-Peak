@@ -196,7 +196,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/goblinp,\
 	/datum/species/dullahan,\
 
-// Dwarves, Gnomes, Kobolds, D. Elves, Moths & Anthrosmall
+// Dwarves, Gnomes, Kobolds, D. Elves, Moths, Constructs & Anthrosmall
 #define RACES_UNDERDARK \
 	/datum/species/human/northern,\
 	/datum/species/human/halfelf,\
